@@ -32,7 +32,7 @@ fun DefaultPreview() {
 
 @Composable
 fun ItemListPage(navController: NavHostController) {
-    val itemViewModel by remember { mutableStateOf(ItemViewModel())}
+    val itemViewModel by remember { mutableStateOf(ItemViewModel()) }
     Scaffold(
         topBar = {
             TopAppBar(navController, "Shopping list", false)
@@ -46,8 +46,8 @@ fun ItemListPage(navController: NavHostController) {
                 ItemListMainView(itemViewModel.items)
                 TextButton(
                     onClick = {
-                    itemViewModel.addItem(Item(1,"Name", "", 1))
-                }) {
+                        itemViewModel.addItem(Item(1, "Name", "", 1))
+                    }) {
                     Text(text = "Add")
                 }
             }
