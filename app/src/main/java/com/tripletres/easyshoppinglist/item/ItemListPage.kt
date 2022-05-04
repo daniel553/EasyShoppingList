@@ -1,19 +1,20 @@
 package com.tripletres.easyshoppinglist.item
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.tripletres.easyshoppinglist.item.model.Item
@@ -39,17 +40,15 @@ fun ItemListPage(navController: NavHostController) {
         },
         content = {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(0.dp)
+                ,
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 ItemListMainView(itemViewModel.items)
-                TextButton(
-                    onClick = {
-                        itemViewModel.addItem(Item(1, "Name", "", 1))
-                    }) {
-                    Text(text = "Add")
-                }
+                ItemAddView(itemViewModel)
             }
 
         }
