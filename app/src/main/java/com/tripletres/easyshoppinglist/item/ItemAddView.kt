@@ -45,7 +45,7 @@ fun ItemAddView(itemViewModel: ItemViewModel?) {
         IconButton(
             modifier = Modifier.weight(0.15f),
             onClick = {
-                itemViewModel?.addItem(Item(1, inputvalue.value.text, "", 1))
+                itemViewModel?.addItem(Item(0, inputvalue.value.text, "", 1))
                 inputvalue.value = TextFieldValue();
             }) {
             Icon(
