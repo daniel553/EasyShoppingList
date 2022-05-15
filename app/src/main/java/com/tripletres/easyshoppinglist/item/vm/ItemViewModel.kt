@@ -1,6 +1,9 @@
 package com.tripletres.easyshoppinglist.item.vm
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,28 +18,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemViewModel @Inject constructor(private val repo: ItemLocalRepo) : ViewModel() {
-    var items = mutableStateListOf<Item>()
+
+    private var _items = mutableStateListOf<Item>()
+    val items: List<Item>
+        get() = _items
 
     fun fetchItems() {
         viewModelScope.launch(Dispatchers.Default) {
-            repo.getAll().let { _items ->
-                LogUtil.d(_items.toString())
-                if(_items.isNotEmpty()) {
-                    viewModelScope.launch(Dispatchers.IO) {
-                        items.addAll(_items)
-                    }
-                }
-            }
+            _items = repo.getAll().toMutableStateList()
         }
     }
 
     fun addItem(item: Item) {
-        //_items.add(item)
-        //repo.add(item)
         viewModelScope.launch(Dispatchers.Default) {
-            repo.insert(item)
+            val id = repo.insert(item)
+            val inserted = repo.get(id)
             viewModelScope.launch(Dispatchers.IO) {
-                items.add(item)
+                _items.add(inserted)
             }
         }
     }

@@ -11,9 +11,11 @@ interface ItemDao {
     @Query("SELECT * FROM item")
     fun getAll(): List<Item>
     @Query("SELECT * FROM item WHERE id = :id")
-    fun getById(id: Int): Item
+    fun getById(id: Long): Item
     @Query("SELECT * FROM item WHERE store = :storeName")
     fun getByStoreName(storeName: String): Item
+    @Insert
+    fun insert(item: Item): Long
     @Insert
     fun insert(vararg items: Item)
     @Delete
