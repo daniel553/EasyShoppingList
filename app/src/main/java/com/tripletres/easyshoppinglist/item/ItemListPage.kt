@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.tripletres.easyshoppinglist.item.model.Item
+import com.tripletres.easyshoppinglist.item.repo.ItemDao
+import com.tripletres.easyshoppinglist.item.repo.ItemLocalRepo
 import com.tripletres.easyshoppinglist.item.vm.ItemViewModel
 import com.tripletres.easyshoppinglist.shared.TopAppBar
 import com.tripletres.easyshoppinglist.ui.theme.EasyShoppingListTheme
@@ -27,13 +29,14 @@ import com.tripletres.easyshoppinglist.ui.theme.EasyShoppingListTheme
 fun DefaultPreview() {
     val navController = rememberNavController()
     EasyShoppingListTheme {
-        ItemListPage(navController)
+        ItemListPage(navController, null)
     }
 }
 
 @Composable
-fun ItemListPage(navController: NavHostController) {
-    val itemViewModel by remember { mutableStateOf(ItemViewModel()) }
+fun ItemListPage(navController: NavHostController, itemViewModel: ItemViewModel?) {
+    //val itemViewModel by remember { mutableStateOf(ItemViewModel()) }
+
     Scaffold(
         topBar = {
             TopAppBar(navController, "Shopping list", false)
@@ -47,7 +50,7 @@ fun ItemListPage(navController: NavHostController) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ItemListMainView(itemViewModel.items)
+                ItemListMainView(itemViewModel?.items ?: emptyList())
                 ItemAddView(itemViewModel)
             }
 

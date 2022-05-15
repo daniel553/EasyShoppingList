@@ -13,10 +13,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class LocalDatabaseModule {
-    @Provides
+
     @Singleton
+    @Provides
     fun provideLocalDatabase(@ApplicationContext context: Context): LocalDatabase {
-        return Room.databaseBuilder(context, LocalDatabase::class.java, "local-db").build()
+        return Room.databaseBuilder(context, LocalDatabase::class.java, "local.db").build()
     }
 
     @Provides

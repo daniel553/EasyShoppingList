@@ -20,6 +20,12 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -49,7 +55,6 @@ android {
 }
 
 dependencies {
-
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
@@ -58,11 +63,14 @@ dependencies {
     implementation "androidx.activity:activity-compose:$activity_compose_version"
     implementation "androidx.navigation:navigation-compose:$navigation_compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
+    //Room
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
     // Hilt testing dependencies
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
@@ -73,4 +81,13 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     testImplementation "androidx.room:room-testing:$room_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+}
+
+kapt {
+    correctErrorTypes true
+    //Plugin should be fixed in future versions
+    //https://stackoverflow.com/questions/62887817/expected-hiltandroidapp-to-have-a-value-did-you-forget-to-apply-the-gradle-plu
+    javacOptions {
+        option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
+    }
 }
