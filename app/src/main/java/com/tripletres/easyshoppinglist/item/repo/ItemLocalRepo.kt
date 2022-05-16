@@ -7,4 +7,6 @@ class ItemLocalRepo @Inject constructor(private val itemDao: ItemDao) {
     fun insert(item: Item): Long = itemDao.insert(item)
     fun getAll() = itemDao.getAll()
     fun get(id: Long) = itemDao.getById(id)
+    fun update(item: Item) = itemDao.update(item)
+    fun delete(item: Item) = itemDao.delete(item)
 }

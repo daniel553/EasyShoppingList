@@ -1,9 +1,6 @@
 package com.tripletres.easyshoppinglist.item.repo
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.tripletres.easyshoppinglist.item.model.Item
 
 @Dao
@@ -18,6 +15,8 @@ interface ItemDao {
     fun insert(item: Item): Long
     @Insert
     fun insert(vararg items: Item)
+    @Update
+    fun update(item: Item)
     @Delete
     fun delete(item: Item)
     @Query("DELETE FROM item WHERE id = :id")
