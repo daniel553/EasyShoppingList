@@ -1,18 +1,24 @@
 package com.tripletres.easyshoppinglist.item.vm
 
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tripletres.easyshoppinglist.R
 import com.tripletres.easyshoppinglist.item.model.Item
 import com.tripletres.easyshoppinglist.item.repo.ItemLocalRepo
+import com.tripletres.easyshoppinglist.util.MessageUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ItemViewModel @Inject constructor(private val repo: ItemLocalRepo) : ViewModel() {
+class ItemViewModel @Inject constructor(
+    private val repo: ItemLocalRepo,
+    private val msg: MessageUtil
+) : ViewModel() {
 
     private var _items = mutableStateListOf<Item>()
     val items: List<Item>
@@ -33,10 +39,16 @@ class ItemViewModel @Inject constructor(private val repo: ItemLocalRepo) : ViewM
      */
     fun addItem(item: Item) {
         viewModelScope.launch(Dispatchers.Default) {
-            val id = repo.insert(item)
-            val inserted = repo.get(id)
-            viewModelScope.launch(Dispatchers.IO) {
-                _items.add(inserted)
+            if (!verifyItem(item)) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    msg.toast(R.string.msg_item_not_complete, Toast.LENGTH_SHORT)
+                }
+            } else {
+                val id = repo.insert(item)
+                val inserted = repo.get(id)
+                viewModelScope.launch(Dispatchers.Main) {
+                    _items.add(inserted)
+                }
             }
         }
     }
@@ -79,9 +91,16 @@ class ItemViewModel @Inject constructor(private val repo: ItemLocalRepo) : ViewM
     fun remove(item: Item) {
         viewModelScope.launch(Dispatchers.Default) {
             repo.delete(item)
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.Main) {
                 _items.remove(item)
             }
         }
+    }
+
+    private fun verifyItem(item: Item): Boolean {
+        if (item.name.isNotEmpty() && item.store.isNotEmpty()) {
+            return true
+        }
+        return false
     }
 }

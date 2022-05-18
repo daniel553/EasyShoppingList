@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lista para mandado simple</string>
+    //Items and list
+    <string name="msg_item_not_complete">Añade un articulo!</string>
+</resources>
