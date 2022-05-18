@@ -1,9 +1,7 @@
 package com.tripletres.easyshoppinglist.item
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -42,14 +40,15 @@ fun ItemListPage(navController: NavHostController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(0.dp),
+                    .padding(it),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 ItemListMainView(itemViewModel.items)
-                ItemAddView(itemViewModel)
             }
-
+        },
+        bottomBar = {
+            ItemAddView(itemViewModel)
         }
     )
 }
