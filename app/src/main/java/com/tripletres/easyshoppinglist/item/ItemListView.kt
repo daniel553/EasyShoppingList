@@ -20,7 +20,7 @@ fun ItemListView(itemList: List<Item> = listOf()) {
 fun ItemListViewPreview() {
     val items = mutableListOf<Item>()
     (1..4).forEach {
-        items.add(Item(it, "Nombre $it", "description $it", it))
+        items.add(Item(it.toLong(), "Nombre $it", "description $it", it))
     }
     ItemListView(items)
 }

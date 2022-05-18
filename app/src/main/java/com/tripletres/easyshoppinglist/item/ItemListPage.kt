@@ -1,20 +1,16 @@
 package com.tripletres.easyshoppinglist.item
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.tripletres.easyshoppinglist.item.model.Item
@@ -33,24 +29,26 @@ fun DefaultPreview() {
 
 @Composable
 fun ItemListPage(navController: NavHostController) {
-    val itemViewModel by remember { mutableStateOf(ItemViewModel()) }
+    val itemViewModel = hiltViewModel<ItemViewModel>()
+    itemViewModel.fetchItems()
     Scaffold(
         topBar = {
+            //TODO: replace "Shopping List" by name of list
             TopAppBar(navController, "Shopping list", false)
         },
         content = {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(0.dp)
-                ,
+                    .padding(it),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 ItemListMainView(itemViewModel.items)
-                ItemAddView(itemViewModel)
             }
-
+        },
+        bottomBar = {
+            ItemAddView(itemViewModel)
         }
     )
 }

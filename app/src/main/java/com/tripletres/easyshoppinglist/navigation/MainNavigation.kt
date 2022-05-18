@@ -13,6 +13,7 @@ fun MainNavigation(){
     NavHost(navController = navController, startDestination = Router.ItemList.route) {
 
         composable(Router.ItemList.route) {
+
             ItemListPage(navController = navController)
         }
 
