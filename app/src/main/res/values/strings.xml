@@ -2,4 +2,5 @@
     <string name="app_name">EZ shopping list</string>
     //Items and list
     <string name="msg_item_not_complete">Add a product name!</string>
+    <string name="item_placeholder">Eggs…</string>
 </resources>

@@ -29,11 +29,11 @@ fun DefaultPreview() {
 
 @Composable
 fun ItemListPage(navController: NavHostController) {
-    //val itemViewModel by remember { mutableStateOf(ItemViewModel()) }
     val itemViewModel = hiltViewModel<ItemViewModel>()
     itemViewModel.fetchItems()
     Scaffold(
         topBar = {
+            //TODO: replace "Shopping List" by name of list
             TopAppBar(navController, "Shopping list", false)
         },
         content = {
