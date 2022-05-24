@@ -97,10 +97,21 @@ class ItemViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Mark as checked or unchecked
+     */
+    fun check(item: Item) {
+        val index = _items.indexOf(item)
+        this.updateItem(index, item.copy(checked = !item.checked))
+    }
+
+    //-Private methods ------------------------------------
+
     private fun verifyItem(item: Item): Boolean {
         if (item.name.isNotEmpty() && item.store.isNotEmpty()) {
             return true
         }
         return false
     }
+
 }

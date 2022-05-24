@@ -9,5 +9,6 @@ data class Item(
     val name: String,
     val description: String,
     val qt: Int = 1,
-    val store: String = "none"
+    val store: String = "none",
+    val checked: Boolean = false
 )
