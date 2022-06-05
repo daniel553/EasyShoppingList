@@ -11,6 +11,7 @@ import com.tripletres.easyshoppinglist.item.repo.ItemLocalRepo
 import com.tripletres.easyshoppinglist.util.MessageUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -87,9 +88,11 @@ class ItemViewModel @Inject constructor(
     /**
      * Removes an item from repo
      * @param item to remove
+     * @param toDelay time milliseconds to delay 0 by default
      */
-    fun remove(item: Item) {
+    fun remove(item: Item, toDelay: Long = 0) {
         viewModelScope.launch(Dispatchers.Default) {
+            if(toDelay > 0) delay(toDelay)
             repo.delete(item)
             viewModelScope.launch(Dispatchers.Main) {
                 _items.remove(item)
